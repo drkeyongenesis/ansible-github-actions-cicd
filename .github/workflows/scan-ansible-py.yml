@@ -31,7 +31,7 @@ jobs:
           else
             echo "No previous commit available. Skipping linting step."
           fi
-  
+
       - name: Get Modified Files for Push Event
         id: get-changed-files
         run: |
@@ -43,7 +43,7 @@ jobs:
           else
             echo "No previous commit available. Skipping linting step."
           fi
-  
+
       - name: Segregate YAML & PYTHON Files
         id: segregate-files
         run: |
@@ -61,7 +61,7 @@ jobs:
           echo "Segregated PYTHON files: $PYTHON_FILES"
           echo "yaml-files=$YAML_FILES" >> $GITHUB_OUTPUT
           echo "python-files=$PYTHON_FILES" >> $GITHUB_OUTPUT
-  
+
       - name: Scan Ansible Playbooks
         run: |
           YAML_FILES="${{ steps.segregate-files.outputs.yaml-files }}"
@@ -70,7 +70,7 @@ jobs:
           else
             echo "No YAML/YML files found. Skipping Ansible Lint."
           fi
-  
+
       - name: Scan python code using pylint
         run: |
           PYTHON_FILES="${{ steps.segregate-files.outputs.python-files }}"
@@ -79,7 +79,7 @@ jobs:
           else
             echo "No python files found, skipping linting of python code"
           fi
-  
+
       - name: scan python code using bandit
         run: |
           PYTHON_FILES="${{ steps.segregate-files.outputs.python-files }}"
@@ -88,7 +88,7 @@ jobs:
           else
             echo "No python files found, skipping bandit scan"
           fi
-  
+
       - name: No Files Found
         run: |
           if [ -z "$YAML_FILES" ]; then
@@ -96,7 +96,7 @@ jobs:
           fi
 
   molecule:
-      name: Molecule
+   name: Molecule
       runs-on: ubuntu-latest
       strategy:
           matrix:
