@@ -1,0 +1,4 @@
+- hosts: all
+  tasks:
+  - debug:
+      msg: "testing github action workflow"
