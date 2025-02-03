@@ -1,4 +1,20 @@
-- hosts: localhost
+#- hosts: localhost
+#  tasks:
+#  - debug:
+#      msg: "testing github action workflow v1"
+
+- name: Ensure nginx is installed and running
+  hosts: your_target_group  # Change to the group of hosts you want to target
+  become: yes  # Use 'sudo' to gain root privileges
   tasks:
-  - debug:
-      msg: "testing github action workflow v1"
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: Ensure nginx is started
+      service:
+        name: nginx
+        state: started
+        enabled: yes
