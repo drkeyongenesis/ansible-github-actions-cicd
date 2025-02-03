@@ -94,8 +94,3 @@ jobs:
           if [ -z "$YAML_FILES" ]; then
             echo "No YAML/YML files found in the commit."
           fi
-
- 
-
-
-        
