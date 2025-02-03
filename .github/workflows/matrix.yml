@@ -1,7 +1,6 @@
 name: matrix build
 
-on:
-  push:
+on: [push]
 
 jobs:
    test:
