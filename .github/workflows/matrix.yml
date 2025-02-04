@@ -3,26 +3,41 @@ name: matrix build
 on: [push]
 
 jobs:
-   test:
-     runs-on: ubuntu-latest
+  test:
+    runs-on: ubuntu-latest
 
-     strategy:
-       matrix:
-         python-version: [3.7, 3.8, 3.9]
+    strategy:
+      matrix:
+        python-version: [3.7, 3.8, 3.9]  # Testing on multiple Python versions
 
-     steps:
-       - name: checkout code
-         uses: actions/checkout@v3
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-       - name: setup python ${{ matrix.python-version }}
-         uses: actions/setup-python@v4
-         with:
-           python-version: ${{ matrix.python-version }}
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
 
-       - name: install dependencies
-         run: |
-           python -m pip install --upgrade pip
-           pip3 install -r requirements.txt
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-       - name: run test
-         run: echo "running test"
+      - name: Start web server
+        run: |
+          # Start the server in the background
+          nohup python -m your_web_server_module &  # Replace with your actual module to start the server
+
+      - name: Run tests against the web server
+        run: |
+          # Run your tests that interact with the server, e.g., using curl, pytest, or similar
+          curl http://localhost:8000  # Adjust this depending on the server and endpoint
+          # Or if using pytest, make sure to specify the test module or test function
+          pytest test_your_module.py --maxfail=1 --disable-warnings -q
+
+      - name: Cleanup
+        run: |
+          # Kill the server after the tests have run
+          pkill -f 'python -m your_web_server_module'
+
