@@ -1,6 +1,9 @@
 name: matrix build
 
-on: [push]
+on:
+  push:
+    branches:
+      - feature/*
 
 jobs:
   test:
