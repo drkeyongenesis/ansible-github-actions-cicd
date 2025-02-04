@@ -1,18 +1,55 @@
-- name: Ensure nginx is installed and running
-  hosts: localhost  # Change to the group of hosts you want to target
-  become: yes  # Use 'sudo' to gain root privileges
+---
+- name: Set up Flask Web Server
+  hosts: webservers  # Define the target hosts (we'll define them in the inventory file)
+  become: yes        # Use sudo privileges
+  vars:
+    python_version: "3.8"  # Version of Python to use
+    app_directory: "/home/ubuntu/flask_app"  # Directory for Flask app
+
   tasks:
-    - name: Install nginx
+    - name: Update apt repository cache
       apt:
-        name: nginx
-        state: present
         update_cache: yes
 
-    - name: Ensure nginx is started
-      service:
-        name: nginx
-        state: started
-        enabled: yes
+    - name: Install Python and pip
+      apt:
+        name:
+          - python{{ python_version }}
+          - python{{ python_version }}-dev
+          - python3-pip
+          - python3-venv
+        state: present
 
-    - debug:
-      msg: "testing github action workflow v1"
+    - name: Create virtual environment for Flask app
+      command: python{{ python_version }} -m venv {{ app_directory }}/venv
+      creates: "{{ app_directory }}/venv"
+
+    - name: Install Flask in virtual environment
+      pip:
+        requirements: "{{ app_directory }}/requirements.txt"
+        virtualenv: "{{ app_directory }}/venv"
+        executable: "{{ app_directory }}/venv/bin/pip"
+
+    - name: Copy Flask app to the server
+      template:
+        src: "templates/app.py.j2"
+        dest: "{{ app_directory }}/app.py"
+
+    - name: Create a requirements.txt file
+      copy:
+        dest: "{{ app_directory }}/requirements.txt"
+        content: |
+          Flask==2.0.1  # You can specify any version you'd like
+
+    - name: Start Flask app
+      command: "{{ app_directory }}/venv/bin/python {{ app_directory }}/app.py"
+      async: 300  # Run asynchronously (timeout after 5 minutes)
+      poll: 0      # Don't wait for it to finish immediately
+
+    - name: Open firewall for Flask port 5000 (Optional)
+      ufw:
+        rule: allow
+        name: 'Flask HTTP'
+        port: '5000'
+        proto: tcp
+        state: enabled
