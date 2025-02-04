@@ -5,7 +5,15 @@
 3. Introduce triggers, syntax, and structure (Syntax checking playbooks and roles)
 4. Create an environment or workspace for execution of our playbook
 5. Apply the the playbook against the target environment 
-6. Verify 
+6. Verify
+
+GitHub Actions is a continuous integration and continuous delivery (CI/CD) platform that allows you to automate your build, test, and deployment pipelines. You can create workflows that build and test every pull request to your repository, or deploy merged pull requests to production.
+
+A workflow is a configurable automated process that will run one or more jobs. Workflows are defined by a YAML file checked in to your repository and will run when triggered by an event in your repository, or they can be triggered manually, or at a defined schedule. 
+
+Use Github Actions to build different workflows.
+Create a test workflow using Lint ansible.
+
 
 ## Automating Python Code Quality with PyLint
 
