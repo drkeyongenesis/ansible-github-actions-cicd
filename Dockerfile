@@ -8,12 +8,12 @@ LABEL org.opencontainers.image.base.name="docker.io/library/python:3.12.8-slim"
 ENV ANSIBLE_CONFIG /etc/ansible/ansible.cfg
 COPY ansible.cfg ${ANSIBLE_CONFIG}
 COPY requirements.txt /requirements.txt
-COPY hello.sh /hello.sh
-COPY install-essential.sh /install-essential.sh
+COPY app.sh /app.sh
+COPY install.sh /install.sh
 
 RUN chmod +x /app.sh
-RUN chmod +x /install-essential.sh
-RUN /install-essential.sh
+RUN chmod +x /install.sh
+RUN /install.sh
 
 RUN pip install --upgrade --no-cache-dir pip
 RUN pip install --upgrade --no-cache-dir -r /requirements.txt
