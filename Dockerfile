@@ -1,18 +1,21 @@
-# Use Python base image
-FROM python:3.10-slim
+FROM docker.io/library/python:3.12.8-slim
 
-# Set working directory
-WORKDIR /app
+LABEL org.opencontainers.image.title="drkeyongenesis/ansible-github-actions-cicd"
+LABEL org.opencontainers.image.source="https://github.com/drkeyongenesis/ansible-github-actions-cicd"
+LABEL org.opencontainers.image.documentation="https://ansible.readthedocs.io/projects/ansible-build-data"
+LABEL org.opencontainers.image.base.name="docker.io/library/python:3.12.8-slim"
 
-# Copy the requirements file and install dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+ENV ANSIBLE_CONFIG /etc/ansible/ansible.cfg
+COPY ansible.cfg ${ANSIBLE_CONFIG}
+COPY requirements.txt /requirements.txt
+COPY hello.sh /hello.sh
+COPY install-essential.sh /install-essential.sh
 
-# Copy all project files into the container
-COPY . .
+RUN chmod +x /app.sh
+RUN chmod +x /install-essential.sh
+RUN /install-essential.sh
 
-# Expose the application port (if it's a web app or similar)
-EXPOSE 80
+RUN pip install --upgrade --no-cache-dir pip
+RUN pip install --upgrade --no-cache-dir -r /requirements.txt
 
-# Command to run the app
-CMD ["python", "app.py"]
+CMD ["/app.sh"]
