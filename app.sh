@@ -13,7 +13,7 @@ echo ""
 
 echo "📦 Essential packages installed by install-essential.sh:"
 echo "=================================================="
-cat /app.sh
+cat /install.sh
 echo "=================================================="
 echo ""
 
