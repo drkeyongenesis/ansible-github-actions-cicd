@@ -4,7 +4,7 @@
 #      msg: "testing github action workflow v1"
 
 - name: Ensure nginx is installed and running
-  hosts: your_target_group  # Change to the group of hosts you want to target
+  hosts: localhost  # Change to the group of hosts you want to target
   become: yes  # Use 'sudo' to gain root privileges
   tasks:
     - name: Install nginx
