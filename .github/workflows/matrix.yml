@@ -1,46 +1,49 @@
-name: matrix build
+name: CI for Flask Web Server Playbook
 
 on:
   push:
     branches:
-      - feature/*
+      - main  # Triggers the workflow when changes are pushed to the main branch
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        python-version: [3.7, 3.8, 3.9]  # Testing on multiple Python versions
+  setup:
+    name: Setup CI for Flask Web Server
+    runs-on: ubuntu-24.04-arm  # Specify the runner OS
 
     steps:
+      # Checkout code
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Set up Python ${{ matrix.python-version }}
+      # Set up Ansible
+      - name: Install Ansible
+        run: |
+          sudo apt update
+          sudo apt install -y ansible
+
+      # Set up Python (if needed for the playbook execution)
+      - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: '3.8'
 
-      - name: Install dependencies
+      # Install dependencies (Flask, etc.)
+      - name: Install Flask and other dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install Flask
 
-      - name: Start web server
+      # Create the Ansible inventory file dynamically
+      - name: Create inventory file
         run: |
-          # Start the server in the background
-          nohup python -m your_web_server_module &  # Replace with your actual module to start the server
+          echo -e "[webservers]\nlocalhost ansible_connection=local" > inventory.ini
 
-      - name: Run tests against the web server
+      # Run the Ansible playbook to set up the Flask server
+      - name: Run Ansible playbook
         run: |
-          # Run your tests that interact with the server, e.g., using curl, pytest, or similar
-          curl http://localhost:8000  # Adjust this depending on the server and endpoint
-          # Or if using pytest, make sure to specify the test module or test function
-          pytest test_your_module.py --maxfail=1 --disable-warnings -q
+          ansible-playbook -i inventory.ini playbooks/setup-flask.yml
 
-      - name: Cleanup
+      # Test if the Flask app is running (optional)
+      - name: Test Flask web server
         run: |
-          # Kill the server after the tests have run
-          pkill -f 'python -m your_web_server_module'
-
+          curl http://localhost:5000  # Assuming the Flask app runs on port 5000
