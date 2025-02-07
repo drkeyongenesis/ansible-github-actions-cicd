@@ -1,7 +1,6 @@
-### **Tutorial: Automating CI/CD with GitHub Actions for Docker and Ansible Playbooks**
+### **Automating CI/CD with GitHub Actions for Docker and Ansible Playbooks**
 
-#### **Tutorial Overview**
-In this tutorial, we will automate the process of:
+In this hands-on session, we will automate the process of:
 1. **Running Ansible Playbooks**: Testing and validating Ansible playbooks during the CI process.
 2. **Docker Image Build and Push**: Building and pushing Docker images to GitHub Container Registry (GHCR).
 3. **Release and Tag Management**: Creating Git tags and releases for versioning.
