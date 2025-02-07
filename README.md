@@ -1,5 +1,3 @@
----
-
 ### **Tutorial: Automating CI/CD with GitHub Actions for Docker and Ansible Playbooks**
 
 #### **Tutorial Overview**
