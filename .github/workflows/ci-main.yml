@@ -9,7 +9,7 @@ on:
 
 jobs:
   init:
-    name: 🧐 Inintialize
+    name: 🧐 Initialize
     runs-on: ubuntu-24.04-arm
     outputs:
       skip_ci: ${{ steps.check_flag.outputs.skip_ci }}
@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
       - name: Ansible Lint (Playbooks code)
         uses: ansible/ansible-content-actions/.github/workflows/ansible_lint.yaml@main
         with:
