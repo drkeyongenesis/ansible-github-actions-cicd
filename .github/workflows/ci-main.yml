@@ -19,11 +19,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Ansible Lint (Playbooks code)
-        uses: ansible/ansible-content-actions/.github/workflows/ansible_lint.yaml@main
-        with:
-          args: '-p playbooks'
-          
       - name: Check for --no-ci flag in commit message
         id: check_flag
         run: |
