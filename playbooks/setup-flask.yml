@@ -22,7 +22,7 @@
 
     - name: Create virtual environment for Flask app
       command: python{{ python_version }} -m venv {{ app_directory }}/venv
-      creates: "{{ app_directory }}/venv"
+      creates: "{{ app_directory }}/venv/bin/activate"
 
     - name: Install Flask in virtual environment
       pip:
