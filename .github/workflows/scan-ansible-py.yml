@@ -31,6 +31,7 @@ jobs:
           else
             echo "No previous commit available. Skipping linting step."
           fi
+
       - name: Get Modified Files for Push Event
         id: get-changed-files
         run: |
@@ -42,6 +43,7 @@ jobs:
           else
             echo "No previous commit available. Skipping linting step."
           fi
+
       - name: Segregate YAML & PYTHON Files
         id: segregate-files
         run: |
@@ -59,6 +61,12 @@ jobs:
           echo "Segregated PYTHON files: $PYTHON_FILES"
           echo "yaml-files=$YAML_FILES" >> $GITHUB_OUTPUT
           echo "python-files=$PYTHON_FILES" >> $GITHUB_OUTPUT
+
+      - name: Install dependencies (ansible-lint, pylint, bandit)
+        run: |
+          python -m pip install --upgrade pip
+          pip install ansible-lint pylint bandit
+
       - name: Scan Ansible Playbooks
         run: |
           YAML_FILES="${{ steps.segregate-files.outputs.yaml-files }}"
@@ -67,6 +75,7 @@ jobs:
           else
             echo "No YAML/YML files found. Skipping Ansible Lint."
           fi
+
       - name: Scan python code using pylint
         run: |
           PYTHON_FILES="${{ steps.segregate-files.outputs.python-files }}"
@@ -75,7 +84,8 @@ jobs:
           else
             echo "No python files found, skipping linting of python code"
           fi
-      - name: scan python code using bandit
+
+      - name: Scan python code using bandit
         run: |
           PYTHON_FILES="${{ steps.segregate-files.outputs.python-files }}"
           if [ -n "$PYTHON_FILES" ]; then
@@ -83,8 +93,9 @@ jobs:
           else
             echo "No python files found, skipping bandit scan"
           fi
+
       - name: No Files Found
         run: |
-          if [ -z "$YAML_FILES" ]; then
-            echo "No YAML/YML files found in the commit."
+          if [ -z "$YAML_FILES" ] && [ -z "$PYTHON_FILES" ]; then
+            echo "No YAML/YML or Python files found in the commit."
           fi
