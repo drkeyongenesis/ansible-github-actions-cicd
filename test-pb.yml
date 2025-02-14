@@ -44,7 +44,7 @@
     - name: Start Flask app
       command: "{{ app_directory }}/venv/bin/python {{ app_directory }}/app.py"
       async: 300  # Run asynchronously (timeout after 5 minutes)
-      poll: 0      # Don't wait for it to finish immediately
+      poll: 0     # Don't wait for it to finish immediately
 
     - name: Open firewall for Flask port 5000 (Optional)
       ufw:
