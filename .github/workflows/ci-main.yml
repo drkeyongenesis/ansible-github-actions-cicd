@@ -113,11 +113,6 @@ jobs:
           tag_prefix: ""
           custom_tag: ${{ needs.init.outputs.image_version }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          release_branches: main
-          create_annotated_tag: false
-          fetch_all_tags: false
-          dry_run: false
-
 
       - name: Create Release
         uses: ncipollo/release-action@v1
