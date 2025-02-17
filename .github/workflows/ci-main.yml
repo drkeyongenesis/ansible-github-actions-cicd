@@ -396,17 +396,29 @@ jobs:
       uses: actions/checkout@v4
     
     # Semgrep runs all bash rules
-    - name: Run Semgrep
-      run: semgrep scan --sarif --output=semgrep.sarif
+    - name: Run Semgrep Scan
+      run: semgrep --config=auto --sarif --output=semgrep.sarif
       env:
         SEMGREP_RULES: r/bash
-    
+
+    - name: Verify SARIF File
+      run: |
+        if [ -f semgrep.sarif ]; then
+          echo "SARIF file generated successfully."
+          ls -lah semgrep.sarif
+        else
+          echo "SARIF file missing!"
+          exit 1
+        fi
+
     # Semgrep generates a sarif file for GHAS to analyze. The sarif file is uploaded to GHAS by the code below
-    - name: Upload sarif report
+    - name: Upload SARIF results
       uses: github/codeql-action/upload-sarif@v3
       with:
-        sarif_file: results.sarif
+        sarif_file: semgrep.sarif  # Ensure this matches the actual file path
         
+#===================================================  NEXT PHASE  ===================================================#
+
   init:
     name: 🧐 Inintialize
     needs: linguist-job
