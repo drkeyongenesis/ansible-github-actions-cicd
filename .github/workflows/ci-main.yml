@@ -471,7 +471,7 @@ jobs:
 
   build:
     name: 🏗️ Build
-    needs: init
+    needs: [ init, linguist-job ]
     if: ${{ needs.init.outputs.skip_ci == 'false' && needs.init.outputs.tag_exists == 'false' }}
     runs-on: ubuntu-24.04-arm
     permissions:
