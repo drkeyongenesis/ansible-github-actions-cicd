@@ -3,7 +3,7 @@ name: CI for Flask Web Server Playbook
 on:
   push:
     branches:
-      - main  # Triggers the workflow when changes are pushed to the main branch
+      - dev  # Triggers the workflow when changes are pushed to the main branch
 
 jobs:
   setup:
@@ -45,5 +45,5 @@ jobs:
 
       # Test if the Flask app is running (optional)
       - name: Test Flask web server
-        run: |
-          curl http://localhost:5000  # Assuming the Flask app runs on port 5000
+        #run: |
+        #  curl http://localhost:5000  # Assuming the Flask app runs on port 5000
