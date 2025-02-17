@@ -405,7 +405,7 @@ jobs:
     - name: Upload sarif report
       uses: github/codeql-action/upload-sarif@v3
       with:
-        sarif_file: semgrep.sarif  
+        sarif_file: results.sarif
         
   init:
     name: 🧐 Inintialize
