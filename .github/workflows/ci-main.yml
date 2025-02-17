@@ -50,7 +50,7 @@ jobs:
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
+      uses: github/codeql-action/init@v3
       with:
         # The language is indicated here for CodeQL and is checked for security and QA issues
         languages: 'cpp'
@@ -61,7 +61,7 @@ jobs:
     # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)
     - name: Autobuild
-      uses: github/codeql-action/autobuild@v2
+      uses: github/codeql-action/autobuild@v3
 
     # If the Autobuild fails above, remove it and uncomment the following three lines
     # and modify them (or add more) to build your code if your project
@@ -72,7 +72,7 @@ jobs:
     #   make release
     
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
+      uses: github/codeql-action/analyze@v3
 
 #===============================================  CSHARP  ===============================================#
   
@@ -93,7 +93,7 @@ jobs:
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
+      uses: github/codeql-action/init@v3
       with:
         # The language is indicated here for CodeQL and is checked for security and QA issues
         languages: 'csharp'
@@ -104,7 +104,7 @@ jobs:
     # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)
     - name: Autobuild
-      uses: github/codeql-action/autobuild@v2
+      uses: github/codeql-action/autobuild@v3
 
     # If the Autobuild fails above, remove it and uncomment the following three lines
     # and modify them (or add more) to build your code if your project
@@ -115,7 +115,7 @@ jobs:
     #   make release
     
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
+      uses: github/codeql-action/analyze@v3
 
 #===============================================  GO  ===============================================#
   
@@ -136,7 +136,7 @@ jobs:
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
+      uses: github/codeql-action/init@v3
       with:
         # The language is indicated here for CodeQL and is checked for security and QA issues
         languages: 'go'
@@ -145,7 +145,7 @@ jobs:
         # config-file: ./.github/codeql/codeql-config.yml
     
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
+      uses: github/codeql-action/analyze@v3
 
 #===============================================  JAVA  ===============================================#
 
@@ -166,7 +166,7 @@ jobs:
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
+      uses: github/codeql-action/init@v3
       with:
         # The language is indicated here for CodeQL and is checked for security and QA issues
         languages: 'java'
@@ -177,7 +177,7 @@ jobs:
     # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)
     - name: Autobuild
-      uses: github/codeql-action/autobuild@v2
+      uses: github/codeql-action/autobuild@v3
 
     # If the Autobuild fails above, remove it and uncomment the following three lines
     # and modify them (or add more) to build your code if your project
@@ -188,7 +188,7 @@ jobs:
     #   make release
     
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
+      uses: github/codeql-action/analyze@v3
 
 #============================================  JAVASCRIPT/TYPESCRIPT  ============================================#
   
@@ -221,7 +221,7 @@ jobs:
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
+      uses: github/codeql-action/init@v3
       with:
         # The language is indicated here for CodeQL and is checked for security and QA issues
         languages: 'javascript'
@@ -230,7 +230,7 @@ jobs:
         config-file: ./.github/codeql/codeql-config.yml
     
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
+      uses: github/codeql-action/analyze@v3
     
 #===============================================  PYTHON  ===============================================#
 
@@ -251,7 +251,7 @@ jobs:
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
+      uses: github/codeql-action/init@v3
       with:
         # The language is indicated here for CodeQL and is checked for security and QA issues
         languages: 'python'
@@ -260,7 +260,7 @@ jobs:
         # config-file: ./.github/codeql/codeql-config.yml
     
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
+      uses: github/codeql-action/analyze@v3
 
 #===============================================  RUBY  ===============================================#
 
@@ -283,7 +283,7 @@ jobs:
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
+      uses: github/codeql-action/init@v3
       with:
         # The language is indicated here for CodeQL and is checked for security and QA issues
         languages: 'ruby'
@@ -292,7 +292,7 @@ jobs:
         # config-file: ./.github/codeql/codeql-config.yml
     
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
+      uses: github/codeql-action/analyze@v3
 
 #=====================================================  PHP  =====================================================#
 
@@ -319,7 +319,7 @@ jobs:
 
       # Semgrep generates a sarif file for GHAS to analyze. The sarif file is uploaded to GHAS by the code below
       - name: Upload sarif report
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: semgrep.sarif
      
@@ -349,7 +349,7 @@ jobs:
     
     # Mobsf generates a sarif file for GHAS to analyze. The sarif file is uploaded to GHAS by the code below
     - name: Upload mobsfscan report
-      uses: github/codeql-action/upload-sarif@v2
+      uses: github/codeql-action/upload-sarif@v3
       with:
         sarif_file: results.sarif
   
@@ -380,7 +380,7 @@ jobs:
     
     # Generates a sarif file for GHAS to analyze. The sarif file is uploaded to GHAS by the code below
     - name: Upload sarif report
-      uses: github/codeql-action/upload-sarif@v2
+      uses: github/codeql-action/upload-sarif@v3
       with:
         sarif_file: results.sarif  
         
