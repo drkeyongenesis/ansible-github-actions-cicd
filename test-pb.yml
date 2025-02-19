@@ -31,8 +31,8 @@
         executable: "{{ app_directory }}/venv/bin/pip"
 
     - name: Copy Flask app to the server
-      template:
-        src: "templates/app.py.j2"
+      copy:
+        src: "app.py"  # Directly copying the app.py file from your local machine
         dest: "{{ app_directory }}/app.py"
 
     - name: Create a requirements.txt file
