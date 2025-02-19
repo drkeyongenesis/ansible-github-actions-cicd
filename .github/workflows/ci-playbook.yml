@@ -44,6 +44,6 @@ jobs:
           ansible-playbook -i inventory.ini playbooks/setup-flask.yml
 
       # Test if the Flask app is running (optional)
-      - name: Test Flask web server
-        #run: |
+      #- name: Test Flask web server
+      #  run: |
         #  curl http://localhost:5000  # Assuming the Flask app runs on port 5000
