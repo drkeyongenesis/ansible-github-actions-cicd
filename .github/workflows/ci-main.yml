@@ -8,7 +8,7 @@ on:
 jobs:
   # Linguist detects which languages exist in the repo.
   linguist-job:
-    name: Linguist
+    name: ☠ Check Linguist
     runs-on: ubuntu-latest
 
     steps:
