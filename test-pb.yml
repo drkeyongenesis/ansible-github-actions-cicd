@@ -1,55 +1,84 @@
 ---
-- name: Set up Flask Web Server
-  hosts: webservers  # Define the target hosts (we'll define them in the inventory file)
-  become: yes        # Use sudo privileges
+- name: Deploy Flask Blog App
+  hosts: flask_servers
+  become: yes
   vars:
-    python_version: "3.8"  # Version of Python to use
-    app_directory: "/home/ubuntu/flask_app"  # Directory for Flask app
+    flask_app_dir: "/opt/flask_blog_app"
+    flask_env: "production"
 
   tasks:
-    - name: Update apt repository cache
+    - name: Update apt cache
       apt:
         update_cache: yes
 
-    - name: Install Python and pip
+    - name: Install required packages
       apt:
         name:
-          - python{{ python_version }}
-          - python{{ python_version }}-dev
           - python3-pip
-          - python3-venv
+          - python3-dev
+          - build-essential
+          - libpq-dev
+          - nginx
+          - git
         state: present
 
-    - name: Create virtual environment for Flask app
-      command: python{{ python_version }} -m venv {{ app_directory }}/venv
-      creates: "{{ app_directory }}/venv"
-
-    - name: Install Flask in virtual environment
+    - name: Install virtualenv
       pip:
-        requirements: "{{ app_directory }}/requirements.txt"
-        virtualenv: "{{ app_directory }}/venv"
-        executable: "{{ app_directory }}/venv/bin/pip"
+        name: virtualenv
+        executable: pip3
 
-    - name: Copy Flask app to the server
-      copy:
-        src: "app.py"  # Directly copying the app.py file from your local machine
-        dest: "{{ app_directory }}/app.py"
+    - name: Create Flask app directory
+      file:
+        path: "{{ flask_app_dir }}"
+        state: directory
 
-    - name: Create a requirements.txt file
-      copy:
-        dest: "{{ app_directory }}/requirements.txt"
-        content: |
-          Flask==2.0.1  # You can specify any version you'd like
+    - name: Clone Flask app repository
+      git:
+        repo: 'https://your_git_repo_url'
+        dest: "{{ flask_app_dir }}"
+        version: master  # Or any branch you want to deploy
+        force: yes
 
-    - name: Start Flask app
-      command: "{{ app_directory }}/venv/bin/python {{ app_directory }}/app.py"
-      async: 300  # Run asynchronously (timeout after 5 minutes)
-      poll: 0     # Don't wait for it to finish immediately
+    - name: Set up virtual environment
+      command: virtualenv venv
+      args:
+        chdir: "{{ flask_app_dir }}"
 
-    - name: Open firewall for Flask port 5000 (Optional)
-      ufw:
-        rule: allow
-        name: 'Flask HTTP'
-        port: '5000'
-        proto: tcp
-        state: enabled
+    - name: Install required Python dependencies
+      pip:
+        requirements: "{{ flask_app_dir }}/requirements.txt"
+        virtualenv: "{{ flask_app_dir }}/venv"
+
+    - name: Create database (if not exists)
+      command: python3 app.py create_db
+      args:
+        chdir: "{{ flask_app_dir }}"
+
+    - name: Set up Gunicorn systemd service
+      template:
+        src: gunicorn.service.j2
+        dest: /etc/systemd/system/gunicorn.service
+
+    - name: Start Gunicorn
+      systemd:
+        name: gunicorn
+        state: started
+        enabled: yes
+
+    - name: Configure Nginx
+      template:
+        src: nginx_flask_app.conf.j2
+        dest: /etc/nginx/sites-available/flask_blog_app
+      notify:
+        - Restart Nginx
+
+    - name: Enable Nginx site
+      command: "ln -s /etc/nginx/sites-available/flask_blog_app /etc/nginx/sites-enabled/"
+      notify:
+        - Restart Nginx
+
+  handlers:
+    - name: Restart Nginx
+      service:
+        name: nginx
+        state: restarted
