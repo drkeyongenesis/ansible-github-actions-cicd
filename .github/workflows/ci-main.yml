@@ -3,7 +3,7 @@ name: ci-main
 on:
   push:
     branches:
-      - main
+      - dev
 
 jobs:
   # Linguist detects which languages exist in the repo.
