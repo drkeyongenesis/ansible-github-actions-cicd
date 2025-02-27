@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Post</title>
+</head>
+<body>
+    <h1>Create Post</h1>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div>
+            {{ form.title.label }} {{ form.title() }}
+        </div>
+        <div>
+            {{ form.content.label }} {{ form.content() }}
+        </div>
+        <button type="submit">Save Post</button>
+    </form>
+</body>
+</html>
