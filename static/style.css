@@ -1,0 +1,182 @@
+/* General Body and Layout Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+/* Header Styling */
+header {
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    background-image: url('https://logos-download.com/wp-content/uploads/2016/03/Bosch-logo.png');
+    background-size: 50px; /* Adjust size */
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+/* Navigation Styling */
+nav {
+    text-align: center;
+    background-color: #333;
+    padding: 10px 0;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 1.1rem;
+}
+
+nav a:hover {
+    color: #4CAF50;
+}
+
+/* Main Content Area */
+.main-content {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Post List */
+ul.post-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul.post-list li {
+    margin: 15px 0;
+    padding: 15px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+ul.post-list li:hover {
+    background-color: #f9f9f9;
+}
+
+/* Post Title Link */
+ul.post-list li a {
+    font-size: 1.5rem;
+    color: #333;
+    text-decoration: none;
+}
+
+ul.post-list li a:hover {
+    color: #4CAF50;
+}
+
+/* Forms */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+form input,
+form textarea,
+form button {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+form button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #45a049;
+}
+
+/* Error and Success Messages */
+.flash-message {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    margin: 10px 0;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.flash-message.danger {
+    background-color: #f44336;
+}
+
+.flash-message.success {
+    background-color: #4CAF50;
+}
+
+/* Post Detail Page */
+.post-detail h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.post-detail p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #555;
+}
+
+.post-detail .actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.post-detail .actions a,
+.post-detail .actions button {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.post-detail .actions a:hover,
+.post-detail .actions button:hover {
+    background-color: #45a049;
+}
+
+/* Footer Styling */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+/* Adding Bosch-related Background Image to the Main Content */
+.main-content {
+    background-image: url('../images/bosch_background.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+}
+
